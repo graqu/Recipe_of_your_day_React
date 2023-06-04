@@ -19,6 +19,19 @@ body {
 	display: flex;
 	align-items: center;
 }
+.itemBg .description {
+	display: block;
+	font-size: 0.8em;
+}
+.itemBg .description div {
+	display: none;
+	padding: 10px;
+	background-color: white;
+	color: black;
+}
+.itemBg .extended div {
+	display: block;
+}
 .itemBg .itemText {
 	flex: 1;
 }
@@ -56,6 +69,6 @@ body {
 .itemBg .iconsWrap span:hover {
 	color: yellow;
 }
-.mr-20{
-  margin-right: 20px;
+.mr-20 {
+	margin-right: 20px;
 }
