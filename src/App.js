@@ -23,8 +23,6 @@ function App() {
 			let newEntry = {
 				id: num,
 				title: newRecipe,
-				ingrediends: newRecipe.ingrediends,
-				description: newRecipe.description,
 				opened: false,
 			}
 			setRecipe([...recipe, newEntry])
@@ -105,6 +103,19 @@ function App() {
 								value={newRecipe}
 								onChange={e => setNewRecipe(e.target.value)}
 								className="form-control form-control-lg"
+								placeholder="Foodname"
+							/>
+							<input
+								value={newRecipe.ingrediends}
+								onChange={e => setNewRecipe(e.target.value)}
+								className="form-control form-control-lg"
+								placeholder="Ingrediends"
+							/>
+							<input
+								value={newRecipe.description}
+								onChange={e => setNewRecipe(e.target.value)}
+								className="form-control form-control-lg"
+								placeholder="Introduction"
 							/>
 						</div>
 						<div className="col-auto">
