@@ -9,27 +9,48 @@ import { Toast } from 'bootstrap'
 function App() {
 	// Recipes (Ideas for dish) states
 	const [recipe, setRecipe] = useState([
-		{ id: 1, title: 'Food 1', ingrediends: 'one, alpha', description: 'sample description 1', opened: false },
-		{ id: 2, title: 'Food 2', ingrediends: 'one, beta', description: 'sample description 2', opened: false },
+		{
+			id: 1,
+			title: 'spagetti',
+			ingrediends: 'pasta,meat,sauce',
+			description: 'cook Pasta, fry meat and mix all with sauce. Enyoy!',
+			opened: false,
+		},
+		{
+			id: 2,
+			title: 'Scrumbled Eggs',
+			ingrediends: 'Eggs, butter, bread, sausage',
+			description: 'fry Eggs and cutted sausage on butter - Eat with bread',
+			opened: false,
+		},
 	])
 	//Temp State
-	const [newRecipe, setNewRecipe] = useState('')
+	const [newRecipe, setNewRecipe] = useState({
+		title: '',
+		ingrediends: '',
+		description: '',
+	})
 	const [updateData, setUpdateData] = useState('')
 
 	//Add Recipe
 	const addRecipe = () => {
-		if (newRecipe) {
+		if (newRecipe.title && newRecipe.ingrediends && newRecipe.description) {
 			let num = recipe.length + 1
 			let newEntry = {
 				id: num,
-				title: newRecipe,
+				title: newRecipe.title,
+				ingrediends: newRecipe.ingrediends,
+				description: newRecipe.description,
 				opened: false,
 			}
 			setRecipe([...recipe, newEntry])
-			setNewRecipe('')
+			setNewRecipe({
+				title: '',
+				ingrediends: '',
+				description: '',
+			})
 		}
 	}
-
 	//Delete Recipe
 	const deleteRecipe = id => {
 		let newRecipes = recipe.filter(item => item.id !== id)
@@ -47,15 +68,36 @@ function App() {
 	}
 	//cancelUpdate
 	const cancelUpdate = () => {
-		setUpdateData('')
+		setUpdateData({
+			...updateData,
+			ingrediends: '',
+			description: '',
+		})
 	}
 	//Change Recipe
 	const changeRecipe = e => {
 		let newEntry = {
 			id: updateData.id,
-			title: e.target.value,
+			title: updateData.title,
 			opened: updateData.opened,
+			ingrediends: updateData.ingrediends,
+			description: updateData.description,
 		}
+
+		switch (e.target.name) {
+			case 'title':
+				newEntry.title = e.target.value
+				break
+			case 'ingrediends':
+				newEntry.ingrediends = e.target.value
+				break
+			case 'description':
+				newEntry.description = e.target.value
+				break
+			default:
+				break
+		}
+
 		setUpdateData(newEntry)
 	}
 	//Update Recipe
@@ -81,6 +123,21 @@ function App() {
 							<input
 								value={updateData && updateData.title}
 								onChange={e => changeRecipe(e)}
+								name="title"
+								className="form-control form-control-lg"
+							/>
+
+							<input
+								value={updateData && updateData.ingrediends}
+								onChange={e => changeRecipe(e)}
+								name="ingrediends"
+								className="form-control form-control-lg"
+							/>
+
+							<input
+								value={updateData && updateData.description}
+								onChange={e => changeRecipe(e)}
+								name="description"
 								className="form-control form-control-lg"
 							/>
 						</div>
@@ -100,20 +157,20 @@ function App() {
 					<div className="row">
 						<div className="col">
 							<input
-								value={newRecipe}
-								onChange={e => setNewRecipe(e.target.value)}
+								value={newRecipe.title}
+								onChange={e => setNewRecipe({ ...newRecipe, title: e.target.value })}
 								className="form-control form-control-lg"
 								placeholder="Foodname"
 							/>
 							<input
 								value={newRecipe.ingrediends}
-								onChange={e => setNewRecipe(e.target.value)}
+								onChange={e => setNewRecipe({ ...newRecipe, ingrediends: e.target.value })}
 								className="form-control form-control-lg"
 								placeholder="Ingrediends"
 							/>
 							<input
 								value={newRecipe.description}
-								onChange={e => setNewRecipe(e.target.value)}
+								onChange={e => setNewRecipe({ ...newRecipe, description: e.target.value })}
 								className="form-control form-control-lg"
 								placeholder="Introduction"
 							/>
@@ -154,7 +211,15 @@ function App() {
 
 										<span
 											title="Edit"
-											onClick={() => setUpdateData({ id: item.id, title: item.title, opened: item.opened })}>
+											onClick={() =>
+												setUpdateData({
+													id: item.id,
+													title: item.title,
+													ingrediends: item.ingrediends,
+													description: item.description,
+													opened: item.opened,
+												})
+											}>
 											<FontAwesomeIcon icon={faPen} />
 										</span>
 
