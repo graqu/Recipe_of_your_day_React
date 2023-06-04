@@ -72,7 +72,7 @@ function App() {
 		<div className="container App">
 			<br />
 			<br />
-			<h2>Recipe of your day - React App</h2>
+			<h1>Recipe of your day - React App</h1>
 			<br />
 			<br />
 			{/* {Update Recipe} */}
@@ -87,10 +87,10 @@ function App() {
 							/>
 						</div>
 						<div className="col-auto">
-							<button onClick={updateRecipe} className="btn btn-lg btn-success mr-20">
+							<button onClick={updateRecipe} className="btn btn-lg btn-primary mr-20">
 								Update
 							</button>
-							<button onClick={cancelUpdate} className="btn btn-lg btn-warning">
+							<button onClick={cancelUpdate} className="btn btn-lg btn-danger">
 								Cancel
 							</button>
 						</div>
@@ -108,7 +108,7 @@ function App() {
 							/>
 						</div>
 						<div className="col-auto">
-							<button onClick={addRecipe} className="btn btn-lg btn-success">
+							<button onClick={addRecipe} className="btn btn-lg btn-primary">
 								Add Recipe
 							</button>
 						</div>
