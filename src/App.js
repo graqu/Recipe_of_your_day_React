@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
   faArrowUp,
+  faClose,
   faPen,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +15,13 @@ import Editor from "./Components/Editor/Editor";
 
 function App() {
   // Recipes (Ideas for dish) states
+  const [editorMode, setEditorMode] = useState(false);
+  const [newRecipe, setNewRecipe] = useState({
+    title: "",
+    ingrediends: "",
+    description: "",
+  });
+  const [updateData, setUpdateData] = useState("");
   const [recipe, setRecipe] = useState([
     {
       id: 1,
@@ -31,11 +39,72 @@ function App() {
     },
   ]);
 
+  const inputsHandler = (entry, value) => {
+    setNewRecipe({
+      ...newRecipe,
+      [entry]: value,
+    });
+    console.log(newRecipe);
+  };
+  const newRecipeHandler = (newEntry) => {
+    setRecipe([...recipe, newEntry]);
+    setNewRecipe({
+      title: "",
+      ingrediends: "",
+      description: "",
+    });
+  };
+  const extendRecipe = (id) => {
+    let newRecipe = recipe.map((item) => {
+      if (item.id === id) {
+        return { ...item, opened: !item.opened };
+      }
+      return item;
+    });
+    setRecipe(newRecipe);
+  };
+  const deleteRecipe = (id) => {
+    let newRecipes = recipe.filter((item) => item.id !== id);
+    setRecipe(newRecipes);
+  };
+  const startEdition = (item) => {
+    setEditorMode(true);
+    console.log(item);
+    setUpdateData(item);
+    setNewRecipe({
+      title: item.title,
+      ingrediends: item.ingrediends,
+      description: item.description,
+    });
+  };
+  const handleUpdate = (entry) => {
+    console.log(`zamienię 1 na 2`);
+    console.log(updateData);
+    console.log(entry);
+  };
+  const cancelUpdate = () => {
+    setEditorMode(false);
+    setUpdateData("");
+    setNewRecipe({
+      title: "",
+      ingrediends: "",
+      description: "",
+    });
+  };
+
   return (
     <div className="container App">
       <h1 className="app__heading">Recipe of your day - React App</h1>
 
-      <Editor />
+      <Editor
+        currentNum={recipe.length}
+        onNewSubmit={newRecipeHandler}
+        onUpdateSubmit={handleUpdate}
+        onInputChange={inputsHandler}
+        onCancel={cancelUpdate}
+        editionStatus={editorMode}
+        items={newRecipe}
+      />
 
       {/* {Display recipes} */}
       {recipe && recipe.length ? "" : "No Recipes on your list..."}
@@ -54,38 +123,24 @@ function App() {
                     {item.opened ? (
                       <span
                         title="Extended / not extended"
-                        // onClick={() => markRecipe(item.id)}
+                        onClick={() => extendRecipe(item.id)}
                       >
                         <FontAwesomeIcon icon={faArrowUp} />
                       </span>
                     ) : (
                       <span
                         title="Extended / not extended"
-                        // onClick={() => markRecipe(item.id)}
+                        onClick={() => extendRecipe(item.id)}
                       >
                         <FontAwesomeIcon icon={faArrowDown} />
                       </span>
                     )}
 
-                    <span
-                      title="Edit"
-                      // onClick={() =>
-                      //   setUpdateData({
-                      //     id: item.id,
-                      //     title: item.title,
-                      //     ingrediends: item.ingrediends,
-                      //     description: item.description,
-                      //     opened: item.opened,
-                      //   })
-                      // }
-                    >
+                    <span title="Edit" onClick={() => startEdition(item)}>
                       <FontAwesomeIcon icon={faPen} />
                     </span>
 
-                    <span
-                      title="Delete"
-                      // onClick={() => deleteRecipe(item.id)}
-                    >
+                    <span title="Delete" onClick={() => deleteRecipe(item.id)}>
                       <FontAwesomeIcon icon={faTrashCan} />
                     </span>
                   </div>

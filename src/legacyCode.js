@@ -31,18 +31,10 @@ const addRecipe = () => {
       opened: false,
     };
     setRecipe([...recipe, newEntry]);
-    setNewRecipe({
-      title: "",
-      ingrediends: "",
-      description: "",
-    });
   }
 };
 //Delete Recipe
-const deleteRecipe = (id) => {
-  let newRecipes = recipe.filter((item) => item.id !== id);
-  setRecipe(newRecipes);
-};
+
 //Mark/extend Recipe
 const markRecipe = (id) => {
   let newRecipe = recipe.map((item) => {

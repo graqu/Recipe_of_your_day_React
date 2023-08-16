@@ -1,22 +1,41 @@
 import { useState } from "react";
 
 const Editor = (props) => {
-  const status = props.status;
-  const [newRecipe, setNewRecipe] = useState({
-    title: "",
-    ingrediends: "",
-    description: "",
-  });
+  const status = props.editionStatus;
+  const newRecipe = props.items;
 
   const handleInputChange = (e) => {
     const dataToChange = e.target.getAttribute("data-item");
-
-    setNewRecipe({
-      ...newRecipe,
-      [dataToChange]: e.target.value,
-    });
-    console.log(newRecipe);
+    props.onInputChange(dataToChange, e.target.value);
   };
+
+  //Functions
+
+  const handleNewItem = () => {
+    if (newRecipe.title && newRecipe.ingrediends && newRecipe.description) {
+      let num = parseFloat(props.currentNum) + 1;
+      let newEntry = {
+        id: num,
+        title: newRecipe.title,
+        ingrediends: newRecipe.ingrediends,
+        description: newRecipe.description,
+        opened: false,
+      };
+      props.onNewSubmit(newEntry);
+    }
+  };
+  const handleUpdate = () => {
+    if (newRecipe.title && newRecipe.ingrediends && newRecipe.description) {
+      let newEntry = {
+        title: newRecipe.title,
+        ingrediends: newRecipe.ingrediends,
+        description: newRecipe.description,
+      };
+      props.onUpdateSubmit(newEntry);
+    }
+  };
+
+  //Elements to show
 
   return (
     // {props.status && props.status ? (
@@ -82,12 +101,23 @@ const Editor = (props) => {
         />
       </div>
       <div className="col-auto">
-        <button
-          // onClick={addRecipe}
-          className="btn btn-lg btn-primary"
-        >
-          Add Recipe
-        </button>
+        {props.editionStatus ? (
+          <>
+            <button
+              className="btn btn-lg btn-primary mr-20"
+              onClick={handleUpdate}
+            >
+              Update
+            </button>
+            <button className="btn btn-lg btn-danger" onClick={props.onCancel}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button onClick={handleNewItem} className="btn btn-lg btn-primary">
+            Add Recipe
+          </button>
+        )}
       </div>
     </div>
     //   )};
