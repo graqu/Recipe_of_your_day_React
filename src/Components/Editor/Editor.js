@@ -1,7 +1,8 @@
 import { useState } from "react";
+import "./Editor.css";
 
 const Editor = (props) => {
-  const status = props.editionStatus;
+  const [inputsStatus, setInputsStatus] = useState(false);
   const newRecipe = props.items;
 
   const handleInputChange = (e) => {
@@ -38,89 +39,77 @@ const Editor = (props) => {
   //Elements to show
 
   return (
-    // {props.status && props.status ? (
-    // <div className="row">
-    //   <div className="col">
-    //     <input
-    //       value={props.status && props.status.title}
-    //       onChange={setNewRecipe}
-    //       name="title"
-    //       className="form-control form-control-lg"
-    //     />
-
-    //     <input
-    //       value={props.status && props.status.ingrediends}
-    //       onChange={(e) => setNewRecipe(e)}
-    //       name="ingrediends"
-    //       className="form-control form-control-lg"
-    //     />
-
-    //     <input
-    //       value={props.status && props.status.description}
-    //       onChange={(e) => setNewRecipe(e)}
-    //       name="description"
-    //       className="form-control form-control-lg"
-    //     />
-    //   </div>
-    //   <div className="col-auto">
-    //     <button
-    //       onClick={props.onChangeFn}
-    //       className="btn btn-lg btn-primary mr-20"
-    //     >
-    //       Update
-    //     </button>
-    //     <button onClick={props.onCancelFn} className="btn btn-lg btn-danger">
-    //       Cancel
-    //     </button>
-    //   </div>
-    // </div>
-
-    // ) : (
     <div className="row">
-      <div className="col">
-        <input
-          value={newRecipe.title}
-          onChange={handleInputChange}
-          className="form-control form-control-lg"
-          placeholder="Foodname"
-          data-item="title"
-        />
-        <input
-          value={newRecipe.ingrediends}
-          onChange={handleInputChange}
-          className="form-control form-control-lg"
-          placeholder="Ingrediends"
-          data-item="ingrediends"
-        />
-        <input
-          value={newRecipe.description}
-          onChange={handleInputChange}
-          className="form-control form-control-lg"
-          placeholder="Introduction"
-          data-item="description"
-        />
-      </div>
-      <div className="col-auto">
-        {props.editionStatus ? (
-          <>
-            <button
-              className="btn btn-lg btn-primary mr-20"
-              onClick={handleUpdate}
-            >
-              Update
-            </button>
-            <button className="btn btn-lg btn-danger" onClick={props.onCancel}>
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button onClick={handleNewItem} className="btn btn-lg btn-primary">
-            Add Recipe
+      {inputsStatus ? (
+        <>
+          <div className="col">
+            <input
+              value={newRecipe.title}
+              onChange={handleInputChange}
+              className="form-control form-control-lg"
+              placeholder="Foodname"
+              data-item="title"
+            />
+            <input
+              value={newRecipe.ingrediends}
+              onChange={handleInputChange}
+              className="form-control form-control-lg"
+              placeholder="Ingrediends"
+              data-item="ingrediends"
+            />
+            <input
+              value={newRecipe.description}
+              onChange={handleInputChange}
+              className="form-control form-control-lg"
+              placeholder="Introduction"
+              data-item="description"
+            />
+          </div>
+          <div className="col-auto">
+            {props.editionStatus ? (
+              <>
+                <button
+                  className="btn btn-lg btn-primary mr-20"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-lg btn-danger"
+                  onClick={props.onCancel}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleNewItem}
+                  className="btn btn-lg btn-primary mr-20"
+                >
+                  Add Recipe
+                </button>
+                <button
+                  onClick={() => setInputsStatus(false)}
+                  className="btn btn-lg btn-warning"
+                >
+                  hide
+                </button>
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="container editor-button-block">
+          <button
+            onClick={() => setInputsStatus(true)}
+            className="btn btn-lg btn-primary"
+          >
+            Create New Recipe
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-    //   )};
   );
 };
 

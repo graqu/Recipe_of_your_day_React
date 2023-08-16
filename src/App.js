@@ -16,6 +16,7 @@ import Editor from "./Components/Editor/Editor";
 function App() {
   // Recipes (Ideas for dish) states
   const [editorMode, setEditorMode] = useState(false);
+
   const [newRecipe, setNewRecipe] = useState({
     title: "",
     ingrediends: "",
@@ -44,7 +45,6 @@ function App() {
       ...newRecipe,
       [entry]: value,
     });
-    console.log(newRecipe);
   };
   const newRecipeHandler = (newEntry) => {
     setRecipe([...recipe, newEntry]);
@@ -69,7 +69,6 @@ function App() {
   };
   const startEdition = (item) => {
     setEditorMode(true);
-    console.log(item);
     setUpdateData(item);
     setNewRecipe({
       title: item.title,
@@ -78,9 +77,19 @@ function App() {
     });
   };
   const handleUpdate = (entry) => {
-    console.log(`zamienię 1 na 2`);
-    console.log(updateData);
-    console.log(entry);
+    let filteredRecords = [...recipe].filter(
+      (item) => item.id !== updateData.id
+    );
+    const newEntry = {
+      id: updateData.id,
+      title: entry.title,
+      ingrediends: entry.ingrediends,
+      description: entry.description,
+      opened: false,
+    };
+    let updatedObject = [...filteredRecords, newEntry];
+    setRecipe(updatedObject);
+    cancelUpdate();
   };
   const cancelUpdate = () => {
     setEditorMode(false);
