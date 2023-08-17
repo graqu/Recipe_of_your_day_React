@@ -1,0 +1,10 @@
+.editor-button-block {
+  padding: 10px 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  margin-bottom: 10px;
+}
+
