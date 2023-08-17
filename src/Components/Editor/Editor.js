@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Editor.css";
 
 const Editor = (props) => {
-  const [inputsStatus, setInputsStatus] = useState(false);
+  const inputsStatus = props.showStatus;
   const newRecipe = props.items;
 
   const handleInputChange = (e) => {
@@ -90,7 +90,7 @@ const Editor = (props) => {
                   Add Recipe
                 </button>
                 <button
-                  onClick={() => setInputsStatus(false)}
+                  onClick={() => props.onInputsShow(false)}
                   className="btn btn-lg btn-warning"
                 >
                   hide
@@ -102,7 +102,7 @@ const Editor = (props) => {
       ) : (
         <div className="container editor-button-block">
           <button
-            onClick={() => setInputsStatus(true)}
+            onClick={() => props.onInputsShow(true)}
             className="btn btn-lg btn-primary"
           >
             Create New Recipe
