@@ -1,11 +1,4 @@
 import IconsWrap from "./IconsWrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowDown,
-  faArrowUp,
-  faPen,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
 import "./RecipeItem.css";
 
 const RecipeItem = (props) => {
@@ -21,11 +14,13 @@ const RecipeItem = (props) => {
       case "delete":
         props.onDeleteFn(id);
         break;
+      default: {
+      }
     }
   };
 
   return (
-    <div className="col itemBg">
+    <div className="col itemBg sm recipe-item">
       <div>
         <span className="itemNumber">{props.orderNumber + 1}</span>
         <span className="itemText">{props.data.title}</span>

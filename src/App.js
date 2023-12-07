@@ -1,19 +1,9 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowDown,
-  faArrowUp,
-  faClose,
-  faClosedCaptioning,
-  faPen,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
 
 import "./App.css";
-import { Toast } from "bootstrap";
 import Editor from "./Components/Editor/Editor";
-import IconsWrap from "./Components/RecipeItem/IconsWrap";
+
 import RecipeItem from "./Components/RecipeItem/RecipeItem";
 
 function App() {

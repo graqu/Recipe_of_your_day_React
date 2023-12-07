@@ -65,6 +65,10 @@
 .itemBg .iconsWrap span:hover {
   color: #354ae6;
 }
+.recipe-item{
+  margin: 20px auto;
+  max-width: 700px;
+}
 
 @keyframes extend {
   0% {
